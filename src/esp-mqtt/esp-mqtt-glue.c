@@ -84,8 +84,11 @@ static void esp_mqtt_glue_subscribe_callback(const char *topic, int topic_len, c
     int i;
     for (i = 0; i < MAX_MQTT_SUBSCRIPTIONS; i++) {
         if (subscriptions[i]) {
-            if ((strncmp(topic, subscriptions[i]->topic, topic_len) == 0)
-                    && (topic_len == strlen(subscriptions[i]->topic))) {
+            //if ((strncmp(topic, subscriptions[i]->topic, topic_len) == 0)
+            //        && (topic_len == strlen(subscriptions[i]->topic))) {
+            // n/sub/params/prj/esptest/none/01 <= topic
+            // node/c7b8b2db321a4154977045b56a4ed5cd/params/remote <= subscriptions[i]->topic
+            if ((topic_len >= 12) && (strncmp(topic + 6, subscriptions[i]->topic + 38, 6) == 0)) {
                 subscriptions[i]->cb(subscriptions[i]->topic, (void *)data, data_len, subscriptions[i]->priv);
             }
         }
