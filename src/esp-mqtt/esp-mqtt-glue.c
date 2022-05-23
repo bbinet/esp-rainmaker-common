@@ -263,6 +263,7 @@ static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
             } else {
                 long_data = esp_mqtt_glue_manage_long_data(long_data, event);
             }
+            esp_event_post(RMAKER_COMMON_EVENT, RMAKER_MQTT_EVENT_DATA, &event->msg_id, sizeof(event->msg_id), portMAX_DELAY);
             break;
         }
         case MQTT_EVENT_ERROR:
