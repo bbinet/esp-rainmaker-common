@@ -54,6 +54,16 @@ typedef enum {
      * Valid only if CONFIG_MQTT_REPORT_DELETED_MESSAGES is enabled.
      */
     RMAKER_MQTT_EVENT_MSG_DELETED,
+    /**
+     * MQTT message data received successfully.
+     * Event data will contain the message ID (integer) of the message.
+     */
+    RMAKER_MQTT_EVENT_DATA,
+    /**
+     * MQTT retained message data received successfully.
+     * Event data will contain the message ID (integer) of the message.
+     */
+    RMAKER_MQTT_EVENT_DATA_RETAIN,
 } esp_rmaker_common_event_t;
 #ifdef __cplusplus
 }

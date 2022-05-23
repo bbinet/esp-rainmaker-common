@@ -276,6 +276,11 @@ static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
                 ESP_LOGD(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
             }
             ESP_LOGD(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
+            if (event->retain) {
+                esp_event_post(RMAKER_COMMON_EVENT, RMAKER_MQTT_EVENT_DATA_RETAIN, &event->msg_id, sizeof(event->msg_id), portMAX_DELAY);
+            } else {
+                esp_event_post(RMAKER_COMMON_EVENT, RMAKER_MQTT_EVENT_DATA, &event->msg_id, sizeof(event->msg_id), portMAX_DELAY);
+            }
             if (event->data_len == event->total_data_len) {
                 /* If long_data still exists, it means there was some issue getting the
                  * long data, and so, it needs to be freed up.
