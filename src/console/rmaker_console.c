@@ -42,7 +42,7 @@ static void scli_task(void *arg)
 
     while (!stop) {
         if (first_done) {
-            uart_write_bytes(uart_num, "\n>> ", 4);
+            fwrite("\n>> ", sizeof(char), 4, stderr); // stderr is unbuffered
         } else {
             first_done = true;
         }
@@ -59,10 +59,9 @@ static void scli_task(void *arg)
             }
             if (event.type == UART_DATA) {
                 while (uart_read_bytes(uart_num, (uint8_t *) &linebuf[i], 1, 0)) {
+                    putc(linebuf[i], stderr); // stderr is unbuffered
                     if (linebuf[i] == '\r') {
-                        uart_write_bytes(uart_num, "\r\n", 2);
-                    } else {
-                        uart_write_bytes(uart_num, (char *) &linebuf[i], 1);
+                        putc('\n', stderr); // stderr is unbuffered
                     }
                     i++;
                 }
