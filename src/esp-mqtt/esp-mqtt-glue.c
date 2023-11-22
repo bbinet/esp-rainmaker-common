@@ -156,13 +156,13 @@ static esp_err_t esp_mqtt_glue_unsubscribe(const char *topic)
     return ESP_FAIL;
 }
 
-static esp_err_t esp_mqtt_glue_publish(const char *topic, void *data, size_t data_len, uint8_t qos, int *msg_id)
+static esp_err_t esp_mqtt_glue_publish(const char *topic, void *data, size_t data_len, uint8_t qos, int *msg_id, int retain)
 {
     if (!mqtt_data || !topic || !data) {
         return ESP_FAIL;
     }
     ESP_LOGD(TAG, "Publishing to %s", topic);
-    int ret = esp_mqtt_client_publish(mqtt_data->mqtt_client, topic, data, data_len, qos, 0);
+    int ret = esp_mqtt_client_publish(mqtt_data->mqtt_client, topic, data, data_len, qos, retain);
     if (ret < 0) {
         ESP_LOGE(TAG, "MQTT Publish failed");
         return ESP_FAIL;

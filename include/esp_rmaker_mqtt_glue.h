@@ -110,7 +110,7 @@ typedef esp_err_t (*esp_rmaker_mqtt_disconnect_t)(void);
  * @return ESP_OK on success.
  * @return error in case of any error.
  */
-typedef esp_err_t (*esp_rmaker_mqtt_publish_t)(const char *topic, void *data, size_t data_len, uint8_t qos, int *msg_id);
+typedef esp_err_t (*esp_rmaker_mqtt_publish_t)(const char *topic, void *data, size_t data_len, uint8_t qos, int *msg_id, int retain);
 
 /** MQTT Subscribe function prototype
  *
